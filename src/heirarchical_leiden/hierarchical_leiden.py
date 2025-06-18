@@ -1,4 +1,4 @@
-from typing import TypedDict, TypeVar
+from typing import Generic, TypedDict, TypeVar
 
 from networkx import Graph
 
@@ -9,11 +9,10 @@ from heirarchical_leiden.utils import Partition
 T = TypeVar("T")
 
 
-class HierarchicalPartition(TypedDict):
-    partition: Partition
+class HierarchicalPartition(TypedDict, Generic[T]):
+    partition: Partition[T]
     level: int
-    children: dict[int, "HierarchicalPartition"]
-
+    children: dict[int, "HierarchicalPartition[T]"]
 
 def hierarchical_leiden(
     G: Graph,
