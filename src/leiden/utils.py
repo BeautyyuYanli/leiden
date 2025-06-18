@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
-from collections.abc import Collection, Iterable, Iterator, Set
+import itertools
+from collections.abc import Callable, Collection, Iterable, Iterator, Set
 from copy import deepcopy
-from typing import Callable, Generic, TypeVar, Union, cast
+from typing import Generic, TypeVar, Union, cast
 
 from networkx import Graph
 from networkx.algorithms.community import community_utils
@@ -121,7 +122,7 @@ class Partition(Generic[T_co]):
             # Otherwise, get the parent graph
             H = G.graph[DataKeys.PARENT_GRAPH]
             # For every node in `nodes`, collect its child nodes using recursive calls and combine them into a single list
-            return sum((Partition.__collect_nodes(H, G.nodes[n][DataKeys.NODES]) for n in nodes), [])
+            return list(itertools.chain.from_iterable(Partition.__collect_nodes(H, G.nodes[n][DataKeys.NODES]) for n in nodes))
 
     @staticmethod
     def __find_original_graph(G: Graph) -> Graph:

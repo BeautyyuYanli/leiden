@@ -1,7 +1,6 @@
 from math import isnan
 
 import networkx as nx
-
 from leiden.quality_functions import CPM, Modularity, QualityFunction
 from leiden.utils import Partition, freeze
 

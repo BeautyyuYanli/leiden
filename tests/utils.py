@@ -1,6 +1,7 @@
 import random
+from collections.abc import Callable
 from functools import wraps
-from typing import Callable, ParamSpec, TypeVar
+from typing import ParamSpec, TypeVar
 
 T = TypeVar("T")
 P = ParamSpec("P")
