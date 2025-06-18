@@ -13,10 +13,9 @@ as is the case with the example of the weighted (4,0) barbell graph in the later
 
 import networkx as nx
 
-from community_detection.leiden import leiden
-from community_detection.louvain import louvain
-from community_detection.quality_functions import CPM, Modularity, QualityFunction
-from community_detection.utils import freeze
+from leiden.leiden import leiden
+from leiden.quality_functions import CPM, Modularity, QualityFunction
+from leiden.utils import freeze
 
 from .utils import seed_rng
 
@@ -38,20 +37,6 @@ BARBELL_COMS_NO_MID = freeze([{0, 1, 2, 3, 4, 5}, {6, 7, 8, 9, 10, 11}])
 # will often belong to one of the communities belonging to one or both of the complete graphs.
 
 
-@seed_rng(0)
-def test_louvain_barbell_modularity() -> None:
-    """
-    Test the Louvain algorithm with modularity as the quality function on a (5,2) barbell graph.
-
-    This graph consists of two complete graphs K_5, connected by a path of length 2.
-    """
-    G = nx.generators.barbell_graph(5, 2)
-
-    𝓗: QualityFunction[int] = Modularity(1)
-    𝓠 = louvain(G, 𝓗)
-
-    assert 𝓠.as_set() == BARBELL_COMS_AND_MID
-
 
 @seed_rng(0)
 def test_leiden_barbell_modularity() -> None:
@@ -67,21 +52,6 @@ def test_leiden_barbell_modularity() -> None:
 
     assert 𝓠.as_set() == BARBELL_COMS_AND_MID
 
-
-@seed_rng(0)
-def test_louvain_barbell_cpm() -> None:
-    """
-    Test the Louvain algorithm with CPM as the quality function on a (5,2) barbell graph.
-
-    This graph consists of two complete graphs K_5, connected by a path of length 2.
-    """
-    G = nx.generators.barbell_graph(5, 2)
-
-    # The following resolution parameter for the CPM was found using binary search on the interval [0.95, 1.05].
-    𝓗: QualityFunction[int] = CPM(0.9999999999999986)
-    𝓠 = louvain(G, 𝓗)
-
-    assert 𝓠.as_set() == BARBELL_COMS_AND_MID
 
 
 @seed_rng(0)
@@ -124,25 +94,6 @@ WEIGHTED_BARBELL_GOOD = freeze([{0, 2, 3, 4}, {1, 5, 6, 7}])
 WEIGHTED_BARBELL_BAD = freeze([{2, 3, 4}, {0, 1}, {5, 6, 7}])
 
 
-@seed_rng(0)
-def test_louvain_weighted_barbell_modularity() -> None:
-    """
-    Test the Louvain algorithm with modularity as the quality function on a weighted (4,0) barbell graph.
-
-    This graph consists of two complete graphs K_4, connected by a single edge.
-    """
-    G = _get_weighted_barbell_graph()
-
-    𝓗: QualityFunction[int] = Modularity(1)
-    𝓠 = louvain(G, 𝓗, weight="weight")
-
-    assert 𝓠.as_set() == WEIGHTED_BARBELL_BAD
-
-    # Also, rerun the algorithm to see whether the result changed (it shouldn't)
-    𝓠 = louvain(G, 𝓗, 𝓠, weight="weight")
-
-    assert 𝓠.as_set() == WEIGHTED_BARBELL_BAD
-
 
 # This test proves that the Leiden algorithm *can arrive* at the WEIGHTED_BARBELL_GOOD partition, which cannot be reached by the
 # greedy Louvain algorithm (cf. the Louvain and Leiden paper).
@@ -165,22 +116,6 @@ def test_leiden_weighted_barbell_modularity() -> None:
     𝓠 = leiden(G, 𝓗, 𝓠, weight="weight")
 
     assert 𝓠.as_set() == WEIGHTED_BARBELL_GOOD
-
-
-@seed_rng(0)
-def test_louvain_weighted_barbell_cpm() -> None:
-    """
-    Test the Louvain algorithm with CPM as the quality function on a weighted (4,0) barbell graph.
-
-    This graph consists of two complete graphs K_4, connected by a single edge.
-    """
-    G = _get_weighted_barbell_graph()
-
-    # The following resolution parameter for the CPM was found using binary search on the interval [0.95, 1.05].
-    𝓗: QualityFunction[int] = CPM(0.9999999999999986)
-    𝓠 = louvain(G, 𝓗, weight="weight")
-
-    assert 𝓠.as_set() == WEIGHTED_BARBELL_BAD
 
 
 # Another seed, leading to the partition that the Louvain algorithm cannot reach.

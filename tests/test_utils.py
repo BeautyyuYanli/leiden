@@ -4,7 +4,7 @@ from typing import cast
 import networkx as nx
 import pytest
 
-from community_detection.utils import DataKeys, Partition, argmax, freeze, node_total
+from leiden.utils import DataKeys, Partition, argmax, freeze, node_total
 
 # Don't let black destroy the manual formatting in this document:
 # fmt: off

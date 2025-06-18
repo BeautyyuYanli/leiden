@@ -2,8 +2,8 @@ from math import isnan
 
 import networkx as nx
 
-from community_detection.quality_functions import CPM, Modularity, QualityFunction
-from community_detection.utils import Partition, freeze
+from leiden.quality_functions import CPM, Modularity, QualityFunction
+from leiden.utils import Partition, freeze
 
 from .utils import partition_randomly
 
