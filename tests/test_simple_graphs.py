@@ -36,7 +36,6 @@ BARBELL_COMS_NO_MID = freeze([{0, 1, 2, 3, 4, 5}, {6, 7, 8, 9, 10, 11}])
 # will often belong to one of the communities belonging to one or both of the complete graphs.
 
 
-
 @seed_rng(0)
 def test_leiden_barbell_modularity() -> None:
     """
@@ -50,7 +49,6 @@ def test_leiden_barbell_modularity() -> None:
     𝓠 = leiden(G, 𝓗)
 
     assert 𝓠.as_set() == BARBELL_COMS_AND_MID
-
 
 
 @seed_rng(0)
@@ -91,7 +89,6 @@ def _get_weighted_barbell_graph() -> nx.Graph:
 # This graph can be partitioned into the following partitions (amongst others):
 WEIGHTED_BARBELL_GOOD = freeze([{0, 2, 3, 4}, {1, 5, 6, 7}])
 WEIGHTED_BARBELL_BAD = freeze([{2, 3, 4}, {0, 1}, {5, 6, 7}])
-
 
 
 # This test proves that the Leiden algorithm *can arrive* at the WEIGHTED_BARBELL_GOOD partition, which cannot be reached by the

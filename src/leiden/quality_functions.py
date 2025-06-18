@@ -1,4 +1,5 @@
 """This module defines quality functions and provides implementations of Modularity and the ConstantPotts Model."""
+
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
