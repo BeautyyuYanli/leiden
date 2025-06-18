@@ -13,15 +13,20 @@ from typing import TypeVar
 import networkx as nx
 from networkx import Graph
 
-from .quality_functions import QualityFunction
-from .utils import DataKeys as Keys
-from .utils import Partition, argmax, freeze, node_total, preprocess_graph
+from heirarchical_leiden.quality_functions import QualityFunction
+from heirarchical_leiden.utils import DataKeys as Keys
+from heirarchical_leiden.utils import Partition, argmax, freeze, node_total, preprocess_graph
 
 T = TypeVar("T")
 
 
 def leiden(
-    G: Graph, 𝓗: QualityFunction[T], 𝓟: Partition[T] | None = None, θ: float = 0.3, γ: float = 0.05, weight: str | None = None
+    G: Graph,
+    𝓗: QualityFunction[T],
+    𝓟: Partition[T] | None = None,
+    θ: float = 0.3,
+    γ: float = 0.05,
+    weight: str | None = None,
 ) -> Partition[T]:
     """
     Perform the Leiden algorithm for community detection.

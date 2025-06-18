@@ -1,8 +1,8 @@
 from math import isnan
 
 import networkx as nx
-from leiden.quality_functions import CPM, Modularity, QualityFunction
-from leiden.utils import Partition, freeze
+from heirarchical_leiden.quality_functions import CPM, Modularity, QualityFunction
+from heirarchical_leiden.utils import Partition, freeze
 
 from .utils import partition_randomly
 

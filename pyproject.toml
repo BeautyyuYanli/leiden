@@ -1,5 +1,5 @@
 [project]
-name = "leiden"
+name = "hierarchical-leiden"
 version = "0.1.0"
 description = "Implementation of the hierarchical Leiden community detection algorithms."
 
@@ -50,6 +50,7 @@ line-length = 140
 [tool.ruff.lint]
 select = [ "E", "F", "UP", "W", "N", "I", "RUF", "PL" ]
 ignore = [
+    "PLR0913",
     "RUF001", "RUF002", "RUF003",  # Ignore warnings about ambiguous unicode characters (𝓗, 𝓟, …)
     "N803", "N806",  # Ignore warnings about uppercase, single-letter variable names (G, H, …)
 ]

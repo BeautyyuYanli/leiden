@@ -12,9 +12,9 @@ as is the case with the example of the weighted (4,0) barbell graph in the later
 """
 
 import networkx as nx
-from leiden.leiden import leiden
-from leiden.quality_functions import CPM, Modularity, QualityFunction
-from leiden.utils import freeze
+from heirarchical_leiden.leiden import leiden
+from heirarchical_leiden.quality_functions import CPM, Modularity, QualityFunction
+from heirarchical_leiden.utils import freeze
 
 from .utils import seed_rng
 

@@ -10,7 +10,7 @@ from typing import Generic, TypeVar
 
 import networkx as nx
 
-from .utils import Partition, single_node_neighbor_cut_size
+from heirarchical_leiden.utils import Partition, single_node_neighbor_cut_size
 
 T = TypeVar("T")
 
