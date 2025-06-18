@@ -45,13 +45,32 @@ def hierarchical_leiden(
     partition_max_size : int, optional
         The maximum size of a partition. If the partition is larger than this size, it will be split into smaller partitions.
         Default value of 64.
-    level : int, optional
-        The current level in the hierarchy, default value of 0.
 
     :returns: A HierarchicalPartition of G into communities.
     """
+    result = _hierarchical_leiden(G, 𝓗, 𝓟, θ, γ, weight, partition_max_size, level)
+    if result is None:
+        return {
+            "partition": Partition.from_partition(G, [G.nodes]),
+            "level": level,
+            "children": {},
+        }
+    return result
+
+def _hierarchical_leiden(
+    G: Graph,
+    𝓗: QualityFunction[T],
+    𝓟: Partition[T] | None = None,
+    θ: float = 0.3,
+    γ: float = 0.05,
+    weight: str | None = None,
+    partition_max_size: int = 64,
+    level: int = 0,
+) -> HierarchicalPartition | None:
     # Apply Leiden algorithm to get the partition
     partition = leiden(G, 𝓗, 𝓟, θ, γ, weight)
+    if len(partition.communities) == 1:
+        return None
 
     # Initialize the hierarchical partition
     children: dict[int, HierarchicalPartition] = {}
@@ -66,8 +85,9 @@ def hierarchical_leiden(
             subgraph = G.subgraph(community).copy()
 
             # Recursively apply hierarchical Leiden to the subgraph
-            child_partition = hierarchical_leiden(subgraph, 𝓗, None, θ, γ, weight, partition_max_size, level + 1)
-            children[idx] = child_partition
+            child_partition = _hierarchical_leiden(subgraph, 𝓗, None, θ, γ, weight, partition_max_size, level + 1)
+            if child_partition is not None:
+                children[idx] = child_partition
 
     # Create and return the hierarchical partition
     result: HierarchicalPartition = {"partition": partition, "level": level, "children": children}

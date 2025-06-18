@@ -1,6 +1,6 @@
 [project]
 name = "hierarchical-leiden"
-version = "0.1.1"
+version = "0.1.2"
 description = "Implementation of the hierarchical Leiden community detection algorithms."
 
 license = {text = "EUPL-1.2"}
