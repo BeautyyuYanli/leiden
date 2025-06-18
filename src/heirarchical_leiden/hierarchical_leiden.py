@@ -74,21 +74,3 @@ def hierarchical_leiden(
     result: HierarchicalPartition = {"partition": partition, "level": level, "children": children}
 
     return result
-
-
-if __name__ == "__main__":
-    import random
-
-    import networkx as nx
-
-    from heirarchical_leiden.leiden import leiden
-    from heirarchical_leiden.quality_functions import Modularity
-
-    # Seed random number generator to make this notebook reproducible
-    random.seed(0)
-
-    G = nx.karate_club_graph()
-    pos = nx.spring_layout(G, seed=1)
-    𝓗 = Modularity(1)
-    𝓠 = hierarchical_leiden(G, 𝓗, partition_max_size=5)
-    print(𝓠)
